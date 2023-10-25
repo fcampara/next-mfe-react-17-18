@@ -6,7 +6,6 @@ module.exports = {
   reactStrictMode: true,
   webpack: (config, options) => {
     const { isServer } = options
-    if (isServer) return config
     /**
      * @type {import('@module-federation/nextjs-mf/utilities').ModuleFederationPluginOptions}
      **/
@@ -14,7 +13,17 @@ module.exports = {
       name: 'shell',
       filename: 'static/chunks/remoteEntry.js',
       remotes: {
-        'legacy': `legacy@http://localhost:3000/_next/static/chunks/remoteEntry.js`,
+        'legacy': `legacy@http://localhost:3000/_next/static/${isServer ? 'ssr' : 'chunks'}/remoteEntry.js`,
+      },
+      shared: {
+        react: {
+          singleton: true,
+          requiredVersion: deps.react
+        },
+        "react-dom": {
+          singleton: true,
+          requiredVersion: deps["react-dom"]
+        }
       }
     }
 

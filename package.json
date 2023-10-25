@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "init": "concurrently npm:init:*",
+    "init:legacy": "npm --prefix apps/legacy install",
+    "init:shell": "npm --prefix apps/shell install",
+    "dev": "concurrently npm:dev:*",
+    "dev:legacy": "npm --prefix apps/legacy run dev",
+    "dev:shell": "npm --prefix apps/shell run dev"
+  },
+  "devDependencies": {
+    "concurrently": "8.2.2"
+  }
+}

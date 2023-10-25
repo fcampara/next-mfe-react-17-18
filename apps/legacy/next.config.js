@@ -1,4 +1,6 @@
 const { NextFederationPlugin } = require("@module-federation/nextjs-mf")
+const pkg = require("./package.json")
+const deps = pkg.dependencies
 
 /**
  * @type {import('next').NextConfig}
@@ -13,8 +15,19 @@ module.exports = {
       name: 'legacy',
       filename: 'static/chunks/remoteEntry.js',
       exposes: {
-        './home': "./pages/home.js",
-        './mui': "./pages/mui.js"
+        './home': "./pages/index.js",
+        './mui': "./pages/mui.js",
+        './simple': "./pages/simple.js"
+      },
+      shared: {
+        react: {
+          singleton: true,
+          requiredVersion: deps.react
+        },
+        "react-dom": {
+          singleton: true,
+          requiredVersion: deps["react-dom"]
+        }
       }
     }
 
